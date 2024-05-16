@@ -86,7 +86,7 @@ func main() {
 Output
 
 ```sh
-Rule evaluation result: [false]
+Rule evaluation result: [true] [false]
 ```
 
 See [examples] for more advanced use cases
