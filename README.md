@@ -19,7 +19,7 @@ A powerful, lightweight and flexible rule engine written in Go. gorule allows yo
 
 ## Introduction
 
-gorule is designed to simplify the process of defining and evaluating business rules within your Go applications. Whether you need to validate data, enforce policies, or build complex decision-making workflows, gorule has you covered.
+`gorule` is designed to simplify the process of defining and evaluating business rules within your Go applications. Whether you need to validate data, enforce policies, or build complex decision-making workflows, `gorule` has you covered.
 
 ## Features
 
@@ -89,29 +89,33 @@ Output
 Rule evaluation result: [true] [false]
 ```
 
-See [examples] for more advanced use cases
+See [examples](https://github.com/praks-1529/gorule/tree/main/examples) for more advanced use cases
 
 ## Rule Types
 
-`gorule` supports various types of rules to cater to different use cases. Below are the rule types supported by `gorule`:
+`gorule` supports various types of rules to cater to different use cases. 
 
 ### Scalar Rule Scalar Condition
-Scalar rules with scalar condition evaluate a single set of condition on a JSON object. These kind of rules are applicable for simple JSON objects
+Scalar rule with scalar condition (aka SRSC) evaluates a single set of condition on a JSON object. These kind of rule is applicable if the data on which the rule is evaluated is a simple JSON object.
 
 
 #### Example
+In the example below, the transaction is categorized as risky or not based on the amount and type of transaction. Full example [here](https://github.com/praks-1529/gorule/blob/main/examples/scalar_rule_scalar_condition_test.go#L11)
+
 ```go
 // Define a rule to categorize a transaction as risky if the amount is greater than or equal to 10000 and the type is "CREDIT_CARD"
 parser := gorule.NewRuleParser("IF: { transaction.amount >= 10000 && transaction.type == \"CREDIT_CARD\" }")
 ```
 
 #### Example use case
-Given a transaction data, categorize it as risky or not based on the amount and type of transaction
 
 ### Scalar Rule Vector Condition
-Scalar rules with vector conditions evaluate conditions over an array of attributes within a single JSON object. These rules are useful when the decision depends on array fields inside JSON object.
+Scalar rule with vector conditions (aka SRVC) evaluate set of conditions and combines (using &&) the evaluation result of each evaluation to give a final result. The vector condition is very useful when the decision has to be made by iterating over a array JSON field. 
 
-Example
+#### Example
+
+In the example below, a transaction is marked valid only if all the attributes of a transaction is "VALID". Full example [here](https://github.com/praks-1529/gorule/blob/main/examples/scalar_rule_vector_condition_test.go#L12)
+
 
 ```go
 // Below example categorizes the transactions as risky or not based on multiple attributes of the transaction
@@ -119,22 +123,17 @@ parser := gorule.NewRuleParser("IF: { FOR: i=0:transaction.attributes.size() { t
 
 ```
 
-#### Example use case
-Categorize transactions as risky or not based on the attributes of the transaction.
+### Vector Rule Scalar Condition
+This rule (aka VRSC) is same as [SRVC](#scalar-rule-vector-condition), with the only difference that it can evaluate multiple rules at once. This symatically is calling SRVC in a loop. This rule is useful when the decision depends on iterating over JSON objects and evaluating rule for each object.
 
+#### Example
 
-### Vector Rule Vector Condition
-These rules are useful when the decision depends on iterating over and evaluating a set of JSON objects in addition to decision depending on array fields inside each JSON object.
-
-Example
+In the example below, we want categorize the each transaction in the transactions array as risky or not based on the amount and type of transaction. Full example [here](https://github.com/praks-1529/gorule/blob/main/examples/vector_rule_scalar_condition_test.go#L12)
 
 ```go
 // Below example iterates over each transactions and categorizes the transactions as risky or not based on the amount and type of transaction
 parser := gorule.NewRuleParser("FOR: i=0:transactions.size() IF: { transactions[i].amount > 10000 && transactions[i].type == \"CREDIT_CARD\" }")
 ```
-
-#### Example use case
-Iterate over each transaction and categorize the transactions as risky or not based on the amount and type of transaction. 
 
 ## Supported data types
 - Integers

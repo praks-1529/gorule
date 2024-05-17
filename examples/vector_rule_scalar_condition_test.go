@@ -9,7 +9,7 @@ import (
 
 // Below example iterates over each transactions and categorizes the transactions as risky or not based on the amount and type of transaction
 // This is same as running scalar-rule X N times where N is the number of transactions
-func TestVectorRuleVectorConditionExample(t *testing.T) {
+func TestVectorRuleScalarConditionExample(t *testing.T) {
 	parser := gorule.NewRuleParser("FOR: i=0:transactions.size() IF: { transactions[i].amount > 10000 && transactions[i].type == \"CREDIT_CARD\" }")
 
 	// Step-2: Create a rule
