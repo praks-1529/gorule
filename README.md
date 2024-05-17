@@ -107,8 +107,6 @@ In the example below, the transaction is categorized as risky or not based on th
 parser := gorule.NewRuleParser("IF: { transaction.amount >= 10000 && transaction.type == \"CREDIT_CARD\" }")
 ```
 
-#### Example use case
-
 ### Scalar Rule Vector Condition
 Scalar rule with vector conditions (aka SRVC) evaluate set of conditions and combines (using &&) the evaluation result of each evaluation to give a final result. The vector condition is very useful when the decision has to be made by iterating over a array JSON field. 
 
