@@ -1,3 +1,5 @@
+[![Go Report Card](https://github.com/praks-1529/gorule/actions/workflows/go.yml/badge.svg)](https://github.com/praks-1529/gorule/actions/workflows/go.yml)
+
 # gorule
 
 A powerful, lightweight and flexible rule engine written in Go. gorule allows you to define and evaluate complex business rules in an efficient and easy-to-use manner.
